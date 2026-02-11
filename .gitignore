@@ -1,0 +1,17 @@
+bin
+obj
+
+/*
+!.github
+!sandbox
+!src
+!test
+
+!.gitignore
+!*.slnx
+!*.props
+!icon-128px.png
+
+*.md
+!README.md
+!LICENSE.md

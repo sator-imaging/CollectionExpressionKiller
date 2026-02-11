@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="src/CollectionExpressionKiller.csproj" />
+  <Project Path="sandbox/CollectionExpressionKiller.Sandbox.csproj" />
+  <Project Path="test/CollectionExpressionKiller.Tests.csproj" />
+</Solution>
