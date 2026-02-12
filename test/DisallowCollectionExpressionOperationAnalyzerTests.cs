@@ -172,7 +172,10 @@ public sealed class CollectionExpressionKillerTests
     [Fact]
     public async Task ReportsMultilineDiagnosticForMultilineCollectionExpression()
     {
-        const string source = "public class C { int[] x = [1,\n2]; }";
+        const string source = """
+            public class C { int[] x = [1,
+            2]; }
+            """;
 
         var diagnostics = await GetDiagnosticsAsync(source);
 
