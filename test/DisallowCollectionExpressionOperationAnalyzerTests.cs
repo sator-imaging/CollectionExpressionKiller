@@ -169,6 +169,40 @@ public sealed class CollectionExpressionKillerTests
         Assert.Empty(diagnostics);
     }
 
+    [Fact]
+    public async Task ReportsMultilineDiagnosticForMultilineCollectionExpression()
+    {
+        const string source = "public class C { int[] x = [1,\n2]; }";
+
+        var diagnostics = await GetDiagnosticsAsync(source);
+
+        AssertDiagnosticIds(
+            diagnostics,
+            "CEK001",
+            "CEK004");
+    }
+
+    [Fact]
+    public async Task DoesNotReportMultilineDiagnosticForSingleLineCollectionExpression()
+    {
+        const string source = """
+            using System.Collections.Generic;
+
+            public static class C
+            {
+                public static IReadOnlyList<int> M()
+                {
+                    return [1, 2, 3];
+                }
+            }
+            """;
+
+        var diagnostics = await GetDiagnosticsAsync(source);
+
+        var diagnostic = Assert.Single(diagnostics);
+        Assert.Equal("CEK001", diagnostic.Id);
+    }
+
     private static async Task<ImmutableArray<Diagnostic>> GetDiagnosticsAsync(string source)
     {
         var syntaxTree = CSharpSyntaxTree.ParseText(
