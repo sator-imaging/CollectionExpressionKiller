@@ -50,7 +50,7 @@ Ability to disallow all expressions or complicated only.
 
 - `CEK001`: Disallow all collection expressions.
 - `CEK002`: Disallow expressions with 4 or more elements. (e.g., `[1, 2, ..other, 4]`)
-- `CEK003`: Disallow expressions whose string representation is longer than 12 characters.
+- `CEK003`: Disallow expressions whose string representation is longer than 12 characters (including `[` and `]`).
 
 
 ## How to Disable Analyzer

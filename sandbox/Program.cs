@@ -7,7 +7,7 @@ int[] values = [11, 22, 33, 44];
 values = [1, 2, 3, 4];
 
 // only an element but more than 12 chars
-values = [0001234567890];
+values = [123_456_789];
 
 // OK: only 3 elements and less than 12 chars
 values = [1, 2, 3];

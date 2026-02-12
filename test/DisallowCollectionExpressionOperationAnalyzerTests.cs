@@ -110,7 +110,7 @@ public sealed class CollectionExpressionKillerTests
 
             public static class C
             {
-                public static IReadOnlyList<int> M()
+                public static IReadOnlyList<long> M()
                 {
                     return [1234567890123];
                 }
