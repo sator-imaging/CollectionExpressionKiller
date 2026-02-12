@@ -18,7 +18,7 @@ public sealed class CollectionExpressionKillerAnalyzer : DiagnosticAnalyzer
     public const string DisallowAllDiagnosticId = "CEK001";
     public const string DisallowManyElementsDiagnosticId = "CEK002";
     public const string DisallowLongExpressionDiagnosticId = "CEK003";
-    private const int ManyElementsThreshold = 4;
+    private const int ManyElementsThreshold = 3;
     private const int LongExpressionThreshold = 12;
 
     private static readonly DiagnosticDescriptor DisallowAllRule = new(
@@ -32,12 +32,12 @@ public sealed class CollectionExpressionKillerAnalyzer : DiagnosticAnalyzer
 
     private static readonly DiagnosticDescriptor DisallowManyElementsRule = new(
         id: DisallowManyElementsDiagnosticId,
-        title: $"Collection expressions with {ManyElementsThreshold} or more elements are disallowed",
-        messageFormat: $"Collection expressions must have fewer than {ManyElementsThreshold} elements",
+        title: $"Collection expressions with more than {ManyElementsThreshold} elements are disallowed",
+        messageFormat: $"Collection expressions must have {ManyElementsThreshold} or fewer elements",
         category: "Usage",
         defaultSeverity: DiagnosticSeverity.Error,
         isEnabledByDefault: true,
-        description: $"Disallows collection expressions when they have {ManyElementsThreshold} or more elements.");
+        description: $"Disallows collection expressions when they have more than {ManyElementsThreshold} elements.");
 
     private static readonly DiagnosticDescriptor DisallowLongExpressionRule = new(
         id: DisallowLongExpressionDiagnosticId,
@@ -71,7 +71,7 @@ public sealed class CollectionExpressionKillerAnalyzer : DiagnosticAnalyzer
             DisallowAllRule,
             expression.GetLocation()));
 
-        if (expression.Elements.Count >= ManyElementsThreshold)
+        if (expression.Elements.Count > ManyElementsThreshold)
         {
             context.ReportDiagnostic(Diagnostic.Create(
                 DisallowManyElementsRule,
