@@ -16,10 +16,10 @@ namespace CollectionExpressionKiller;
 public sealed class CollectionExpressionKillerAnalyzer : DiagnosticAnalyzer
 {
     public const string DisallowAllDiagnosticId = "CEK001";
-    public const string DisallowLessThanFourDiagnosticId = "CEK002";
-    public const string DisallowLongTextDiagnosticId = "CEK003";
-    private const int MinElementsForSecondDiagnostic = 4;
-    private const int MaxAllowedExpressionTextLength = 12;
+    public const string DisallowManyElementsDiagnosticId = "CEK002";
+    public const string DisallowLongExpressionDiagnosticId = "CEK003";
+    private const int ManyElementsThreshold = 3;
+    private const int LongExpressionThreshold = 12;
 
     private static readonly DiagnosticDescriptor DisallowAllRule = new(
         id: DisallowAllDiagnosticId,
@@ -30,26 +30,26 @@ public sealed class CollectionExpressionKillerAnalyzer : DiagnosticAnalyzer
         isEnabledByDefault: true,
         description: "Disallows any collection expression syntax.");
 
-    private static readonly DiagnosticDescriptor DisallowLessThanFourRule = new(
-        id: DisallowLessThanFourDiagnosticId,
-        title: "Collection expressions with 4 or more elements are disallowed",
-        messageFormat: "Collection expressions must have fewer than 4 elements",
+    private static readonly DiagnosticDescriptor DisallowManyElementsRule = new(
+        id: DisallowManyElementsDiagnosticId,
+        title: $"Collection expressions with more than {ManyElementsThreshold} elements are disallowed",
+        messageFormat: $"Collection expressions must have {ManyElementsThreshold} or fewer elements",
         category: "Usage",
         defaultSeverity: DiagnosticSeverity.Error,
         isEnabledByDefault: true,
-        description: "Disallows collection expressions when they have 4 or more elements.");
+        description: $"Disallows collection expressions when they have more than {ManyElementsThreshold} elements.");
 
-    private static readonly DiagnosticDescriptor DisallowLongTextRule = new(
-        id: DisallowLongTextDiagnosticId,
+    private static readonly DiagnosticDescriptor DisallowLongExpressionRule = new(
+        id: DisallowLongExpressionDiagnosticId,
         title: "Long collection expression text is disallowed",
-        messageFormat: "Collection expression text length must be 12 or fewer characters",
+        messageFormat: $"Collection expression text length must be {LongExpressionThreshold} or fewer characters",
         category: "Usage",
         defaultSeverity: DiagnosticSeverity.Error,
         isEnabledByDefault: true,
-        description: "Disallows collection expressions whose string representation is longer than 12 characters.");
+        description: $"Disallows collection expressions whose string representation is longer than {LongExpressionThreshold} characters.");
 
     public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics =>
-        ImmutableArray.Create(DisallowAllRule, DisallowLessThanFourRule, DisallowLongTextRule);
+        ImmutableArray.Create(DisallowAllRule, DisallowManyElementsRule, DisallowLongExpressionRule);
 
     public override void Initialize(AnalysisContext context)
     {
@@ -71,17 +71,17 @@ public sealed class CollectionExpressionKillerAnalyzer : DiagnosticAnalyzer
             DisallowAllRule,
             expression.GetLocation()));
 
-        if (expression.Elements.Count >= MinElementsForSecondDiagnostic)
+        if (expression.Elements.Count > ManyElementsThreshold)
         {
             context.ReportDiagnostic(Diagnostic.Create(
-                DisallowLessThanFourRule,
+                DisallowManyElementsRule,
                 expression.GetLocation()));
         }
 
-        if (expression.Span.Length > MaxAllowedExpressionTextLength)
+        if (expression.Span.Length > LongExpressionThreshold)
         {
             context.ReportDiagnostic(Diagnostic.Create(
-                DisallowLongTextRule,
+                DisallowLongExpressionRule,
                 expression.GetLocation()));
         }
     }
