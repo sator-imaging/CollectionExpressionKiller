@@ -5,6 +5,9 @@
 Ensures Explicit Coding Style for Code Review
 
 [![nuget](https://img.shields.io/nuget/vpre/CollectionExpressionKiller)](https://www.nuget.org/packages/CollectionExpressionKiller)
+[![test](https://github.com/sator-imaging/CollectionExpressionKiller/actions/workflows/test.yml/badge.svg)](https://github.com/sator-imaging/CollectionExpressionKiller/actions/workflows/test.yml)
+&nbsp;
+[![DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/sator-imaging/CollectionExpressionKiller)
 
 </div>
 
