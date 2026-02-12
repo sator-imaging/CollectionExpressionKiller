@@ -28,7 +28,7 @@ public sealed class CollectionExpressionKillerTests
         AssertDiagnosticIds(
             diagnostics,
             CollectionExpressionKillerAnalyzer.DisallowAllDiagnosticId,
-            CollectionExpressionKillerAnalyzer.DisallowLessThanFourDiagnosticId);
+            CollectionExpressionKillerAnalyzer.DisallowManyElementsDiagnosticId);
     }
 
     [Fact]
@@ -74,8 +74,8 @@ public sealed class CollectionExpressionKillerTests
         AssertDiagnosticIds(
             diagnostics,
             CollectionExpressionKillerAnalyzer.DisallowAllDiagnosticId,
-            CollectionExpressionKillerAnalyzer.DisallowLessThanFourDiagnosticId,
-            CollectionExpressionKillerAnalyzer.DisallowLongTextDiagnosticId);
+            CollectionExpressionKillerAnalyzer.DisallowManyElementsDiagnosticId,
+            CollectionExpressionKillerAnalyzer.DisallowLongExpressionDiagnosticId);
     }
 
     [Fact]
@@ -99,7 +99,7 @@ public sealed class CollectionExpressionKillerTests
         AssertDiagnosticIds(
             diagnostics,
             CollectionExpressionKillerAnalyzer.DisallowAllDiagnosticId,
-            CollectionExpressionKillerAnalyzer.DisallowLongTextDiagnosticId);
+            CollectionExpressionKillerAnalyzer.DisallowLongExpressionDiagnosticId);
     }
 
     [Fact]
@@ -122,7 +122,7 @@ public sealed class CollectionExpressionKillerTests
         AssertDiagnosticIds(
             diagnostics,
             CollectionExpressionKillerAnalyzer.DisallowAllDiagnosticId,
-            CollectionExpressionKillerAnalyzer.DisallowLongTextDiagnosticId);
+            CollectionExpressionKillerAnalyzer.DisallowLongExpressionDiagnosticId);
     }
 
     [Fact]
@@ -145,8 +145,8 @@ public sealed class CollectionExpressionKillerTests
         AssertDiagnosticIds(
             diagnostics,
             CollectionExpressionKillerAnalyzer.DisallowAllDiagnosticId,
-            CollectionExpressionKillerAnalyzer.DisallowLessThanFourDiagnosticId,
-            CollectionExpressionKillerAnalyzer.DisallowLongTextDiagnosticId);
+            CollectionExpressionKillerAnalyzer.DisallowManyElementsDiagnosticId,
+            CollectionExpressionKillerAnalyzer.DisallowLongExpressionDiagnosticId);
     }
 
     [Fact]
