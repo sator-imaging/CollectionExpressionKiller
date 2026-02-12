@@ -1,7 +1,10 @@
+#pragma warning disable IDE0059
+
 // ERROR: all errors
 int[] values = [
         1, 2, 3, 4
 ];
+
 
 #pragma warning disable CEK001  // Collection expressions are disallowed
 
@@ -14,6 +17,12 @@ values = [123_456_789];
 // ERROR: multiline expression is not allowed
 values = [1,
 2];
+
+
+#pragma warning disable CEK003  // Long collection expression text is disallowed
+
+// OK: Disable CEK001/003 to allow expression which is 3 or less elements in single line.
+values = [1234, 56789, .. values];
 
 // OK: only 3 elements and expression is less than or equal to 12 chars
 values = [1, 2, 3];
