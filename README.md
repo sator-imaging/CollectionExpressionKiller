@@ -51,6 +51,7 @@ Ability to disallow all expressions or complicated only.
 - `CEK001`: Disallow all collection expressions.
 - `CEK002`: Disallow expressions with 4 or more elements. (e.g., `[1, 2, ..other, 4]`)
 - `CEK003`: Disallow expressions whose string representation is longer than 12 characters (including `[` and `]`).
+- `CEK004`: Disallow multiline expressions.
 
 
 ## How to Disable Analyzer
@@ -61,6 +62,7 @@ Disable for entire `.cs` file with `#pragma`:
 #pragma warning disable CEK001
 #pragma warning disable CEK002
 #pragma warning disable CEK003
+#pragma warning disable CEK004
 
 int[] values = [1, 2, 3, 4, ..otherCollection];
 ```
@@ -85,6 +87,11 @@ using System.Diagnostics.CodeAnalysis;
     "Usage",
     "CEK003:Collection expression text length must be 12 or fewer characters",
     Justification = "Approved for this assembly")]
+
+[assembly: SuppressMessage(
+    "Usage",
+    "CEK004:Collection expressions must be on a single line",
+    Justification = "Approved for this assembly")]
 ```
 
 
@@ -94,4 +101,5 @@ Disable for entire project with `.editorconfig`:
 dotnet_diagnostic.CEK001.severity = none
 dotnet_diagnostic.CEK002.severity = none
 dotnet_diagnostic.CEK003.severity = none
+dotnet_diagnostic.CEK004.severity = none
 ```

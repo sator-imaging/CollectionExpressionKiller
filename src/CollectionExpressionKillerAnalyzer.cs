@@ -18,6 +18,7 @@ public sealed class CollectionExpressionKillerAnalyzer : DiagnosticAnalyzer
     public const string DisallowAllDiagnosticId = "CEK001";
     public const string DisallowManyElementsDiagnosticId = "CEK002";
     public const string DisallowLongExpressionDiagnosticId = "CEK003";
+    public const string DisallowMultilineDiagnosticId = "CEK004";
     private const int ManyElementsThreshold = 3;
     private const int LongExpressionThreshold = 12;
 
@@ -48,8 +49,17 @@ public sealed class CollectionExpressionKillerAnalyzer : DiagnosticAnalyzer
         isEnabledByDefault: true,
         description: $"Disallows collection expressions whose string representation is longer than {LongExpressionThreshold} characters.");
 
+    private static readonly DiagnosticDescriptor DisallowMultilineRule = new(
+        id: DisallowMultilineDiagnosticId,
+        title: "Multiline collection expressions are disallowed",
+        messageFormat: "Collection expressions must be on a single line",
+        category: "Usage",
+        defaultSeverity: DiagnosticSeverity.Error,
+        isEnabledByDefault: true,
+        description: "Disallows collection expressions that span multiple lines.");
+
     public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics =>
-        ImmutableArray.Create(DisallowAllRule, DisallowManyElementsRule, DisallowLongExpressionRule);
+        ImmutableArray.Create(DisallowAllRule, DisallowManyElementsRule, DisallowLongExpressionRule, DisallowMultilineRule);
 
     public override void Initialize(AnalysisContext context)
     {
@@ -82,6 +92,14 @@ public sealed class CollectionExpressionKillerAnalyzer : DiagnosticAnalyzer
         {
             context.ReportDiagnostic(Diagnostic.Create(
                 DisallowLongExpressionRule,
+                expression.GetLocation()));
+        }
+
+        var lineSpan = expression.GetLocation().GetLineSpan();
+        if (lineSpan.StartLinePosition.Line != lineSpan.EndLinePosition.Line)
+        {
+            context.ReportDiagnostic(Diagnostic.Create(
+                DisallowMultilineRule,
                 expression.GetLocation()));
         }
     }
