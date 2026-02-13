@@ -28,11 +28,12 @@ public sealed class CollectionExpressionKillerTests
         AssertDiagnosticIds(
             diagnostics,
             CollectionExpressionKillerAnalyzer.DisallowAllDiagnosticId,
-            CollectionExpressionKillerAnalyzer.DisallowManyElementsDiagnosticId);
+            CollectionExpressionKillerAnalyzer.DisallowManyElementsDiagnosticId,
+            "CEK005");
     }
 
     [Fact]
-    public async Task ReportsOnlyDisallowAllDiagnosticForCollectionExpressionWithThreeElements()
+    public async Task ReportsBothDisallowAllAndAnyElementsDiagnosticsForCollectionExpressionWithThreeElements()
     {
         const string source = """
             using System.Collections.Generic;
@@ -48,13 +49,14 @@ public sealed class CollectionExpressionKillerTests
 
         var diagnostics = await GetDiagnosticsAsync(source);
 
-        var diagnostic = Assert.Single(diagnostics);
-        Assert.Equal(CollectionExpressionKillerAnalyzer.DisallowAllDiagnosticId, diagnostic.Id);
-        Assert.Equal(DiagnosticSeverity.Error, diagnostic.Severity);
+        AssertDiagnosticIds(
+            diagnostics,
+            CollectionExpressionKillerAnalyzer.DisallowAllDiagnosticId,
+            "CEK005");
     }
 
     [Fact]
-    public async Task ReportsBothDiagnosticsForCollectionExpressionWithSpreadAndFourElements()
+    public async Task ReportsDiagnosticsForCollectionExpressionWithSpreadAndFourElements()
     {
         const string source = """
             using System.Collections.Generic;
@@ -75,11 +77,12 @@ public sealed class CollectionExpressionKillerTests
             diagnostics,
             CollectionExpressionKillerAnalyzer.DisallowAllDiagnosticId,
             CollectionExpressionKillerAnalyzer.DisallowManyElementsDiagnosticId,
-            CollectionExpressionKillerAnalyzer.DisallowLongExpressionDiagnosticId);
+            CollectionExpressionKillerAnalyzer.DisallowLongExpressionDiagnosticId,
+            "CEK005");
     }
 
     [Fact]
-    public async Task ReportsOnlyDisallowAllDiagnosticForCollectionExpressionWithSpreadAndThreeElements()
+    public async Task ReportsDiagnosticsForCollectionExpressionWithSpreadAndThreeElements()
     {
         const string source = """
             using System.Collections.Generic;
@@ -99,11 +102,12 @@ public sealed class CollectionExpressionKillerTests
         AssertDiagnosticIds(
             diagnostics,
             CollectionExpressionKillerAnalyzer.DisallowAllDiagnosticId,
-            CollectionExpressionKillerAnalyzer.DisallowLongExpressionDiagnosticId);
+            CollectionExpressionKillerAnalyzer.DisallowLongExpressionDiagnosticId,
+            "CEK005");
     }
 
     [Fact]
-    public async Task ReportsDisallowAllAndLongTextDiagnosticsForLongSingleElementCollectionExpression()
+    public async Task ReportsDisallowAllLongTextAndAnyElementsDiagnosticsForLongSingleElementCollectionExpression()
     {
         const string source = """
             using System.Collections.Generic;
@@ -122,7 +126,8 @@ public sealed class CollectionExpressionKillerTests
         AssertDiagnosticIds(
             diagnostics,
             CollectionExpressionKillerAnalyzer.DisallowAllDiagnosticId,
-            CollectionExpressionKillerAnalyzer.DisallowLongExpressionDiagnosticId);
+            CollectionExpressionKillerAnalyzer.DisallowLongExpressionDiagnosticId,
+            "CEK005");
     }
 
     [Fact]
@@ -146,7 +151,8 @@ public sealed class CollectionExpressionKillerTests
             diagnostics,
             CollectionExpressionKillerAnalyzer.DisallowAllDiagnosticId,
             CollectionExpressionKillerAnalyzer.DisallowManyElementsDiagnosticId,
-            CollectionExpressionKillerAnalyzer.DisallowLongExpressionDiagnosticId);
+            CollectionExpressionKillerAnalyzer.DisallowLongExpressionDiagnosticId,
+            "CEK005");
     }
 
     [Fact]
@@ -182,7 +188,76 @@ public sealed class CollectionExpressionKillerTests
         AssertDiagnosticIds(
             diagnostics,
             "CEK001",
-            "CEK004");
+            "CEK004",
+            "CEK005");
+    }
+
+    [Fact]
+    public async Task DoesNotReportAnyElementsDiagnosticForEmptyCollectionExpression()
+    {
+        const string source = """
+            using System.Collections.Generic;
+
+            public static class C
+            {
+                public static IReadOnlyList<int> M()
+                {
+                    return [];
+                }
+            }
+            """;
+
+        var diagnostics = await GetDiagnosticsAsync(source);
+
+        var diagnostic = Assert.Single(diagnostics);
+        Assert.Equal(CollectionExpressionKillerAnalyzer.DisallowAllDiagnosticId, diagnostic.Id);
+    }
+
+    [Fact]
+    public async Task ReportsAnyElementsDiagnosticForCollectionExpressionWithOneElement()
+    {
+        const string source = """
+            using System.Collections.Generic;
+
+            public static class C
+            {
+                public static IReadOnlyList<int> M()
+                {
+                    return [1];
+                }
+            }
+            """;
+
+        var diagnostics = await GetDiagnosticsAsync(source);
+
+        AssertDiagnosticIds(
+            diagnostics,
+            CollectionExpressionKillerAnalyzer.DisallowAllDiagnosticId,
+            "CEK005");
+    }
+
+    [Fact]
+    public async Task ReportsAnyElementsAndManyElementsDiagnosticsForCollectionExpressionWithFourElements()
+    {
+        const string source = """
+            using System.Collections.Generic;
+
+            public static class C
+            {
+                public static IReadOnlyList<int> M()
+                {
+                    return [1, 2, 3, 4];
+                }
+            }
+            """;
+
+        var diagnostics = await GetDiagnosticsAsync(source);
+
+        AssertDiagnosticIds(
+            diagnostics,
+            CollectionExpressionKillerAnalyzer.DisallowAllDiagnosticId,
+            CollectionExpressionKillerAnalyzer.DisallowManyElementsDiagnosticId,
+            "CEK005");
     }
 
     [Fact]
@@ -202,8 +277,10 @@ public sealed class CollectionExpressionKillerTests
 
         var diagnostics = await GetDiagnosticsAsync(source);
 
-        var diagnostic = Assert.Single(diagnostics);
-        Assert.Equal("CEK001", diagnostic.Id);
+        AssertDiagnosticIds(
+            diagnostics,
+            "CEK001",
+            "CEK005");
     }
 
     private static async Task<ImmutableArray<Diagnostic>> GetDiagnosticsAsync(string source)

@@ -55,6 +55,7 @@ Ability to disallow all expressions or complicated only.
 - `CEK002`: Disallow expressions with 4 or more elements. (e.g., `[1, 2, ..other, 4]`)
 - `CEK003`: Disallow expressions whose string representation is longer than 12 characters (including `[` and `]`).
 - `CEK004`: Disallow multiline expressions.
+- `CEK005`: Disallow collection expressions with elements. (i.e., Only `[]` is allowed)
 
 
 Example usage:
@@ -109,6 +110,11 @@ using System.Diagnostics.CodeAnalysis;
     "Usage",
     "CEK004:Collection expressions must be on a single line",
     Justification = "Approved for this assembly")]
+
+[assembly: SuppressMessage(
+    "Usage",
+    "CEK005:Collection expressions must be empty",
+    Justification = "Approved for this assembly")]
 ```
 
 
@@ -119,4 +125,5 @@ dotnet_diagnostic.CEK001.severity = none
 dotnet_diagnostic.CEK002.severity = none
 dotnet_diagnostic.CEK003.severity = none
 dotnet_diagnostic.CEK004.severity = none
+dotnet_diagnostic.CEK005.severity = none
 ```
