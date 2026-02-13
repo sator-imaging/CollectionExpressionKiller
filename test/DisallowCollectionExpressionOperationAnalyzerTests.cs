@@ -29,7 +29,7 @@ public sealed class CollectionExpressionKillerTests
             diagnostics,
             CollectionExpressionKillerAnalyzer.DisallowAllDiagnosticId,
             CollectionExpressionKillerAnalyzer.DisallowManyElementsDiagnosticId,
-            "CEK005");
+            CollectionExpressionKillerAnalyzer.DisallowAnyElementsDiagnosticId);
     }
 
     [Fact]
@@ -52,7 +52,7 @@ public sealed class CollectionExpressionKillerTests
         AssertDiagnosticIds(
             diagnostics,
             CollectionExpressionKillerAnalyzer.DisallowAllDiagnosticId,
-            "CEK005");
+            CollectionExpressionKillerAnalyzer.DisallowAnyElementsDiagnosticId);
     }
 
     [Fact]
@@ -78,7 +78,7 @@ public sealed class CollectionExpressionKillerTests
             CollectionExpressionKillerAnalyzer.DisallowAllDiagnosticId,
             CollectionExpressionKillerAnalyzer.DisallowManyElementsDiagnosticId,
             CollectionExpressionKillerAnalyzer.DisallowLongExpressionDiagnosticId,
-            "CEK005");
+            CollectionExpressionKillerAnalyzer.DisallowAnyElementsDiagnosticId);
     }
 
     [Fact]
@@ -103,7 +103,7 @@ public sealed class CollectionExpressionKillerTests
             diagnostics,
             CollectionExpressionKillerAnalyzer.DisallowAllDiagnosticId,
             CollectionExpressionKillerAnalyzer.DisallowLongExpressionDiagnosticId,
-            "CEK005");
+            CollectionExpressionKillerAnalyzer.DisallowAnyElementsDiagnosticId);
     }
 
     [Fact]
@@ -127,7 +127,7 @@ public sealed class CollectionExpressionKillerTests
             diagnostics,
             CollectionExpressionKillerAnalyzer.DisallowAllDiagnosticId,
             CollectionExpressionKillerAnalyzer.DisallowLongExpressionDiagnosticId,
-            "CEK005");
+            CollectionExpressionKillerAnalyzer.DisallowAnyElementsDiagnosticId);
     }
 
     [Fact]
@@ -152,7 +152,7 @@ public sealed class CollectionExpressionKillerTests
             CollectionExpressionKillerAnalyzer.DisallowAllDiagnosticId,
             CollectionExpressionKillerAnalyzer.DisallowManyElementsDiagnosticId,
             CollectionExpressionKillerAnalyzer.DisallowLongExpressionDiagnosticId,
-            "CEK005");
+            CollectionExpressionKillerAnalyzer.DisallowAnyElementsDiagnosticId);
     }
 
     [Fact]
@@ -187,9 +187,9 @@ public sealed class CollectionExpressionKillerTests
 
         AssertDiagnosticIds(
             diagnostics,
-            "CEK001",
-            "CEK004",
-            "CEK005");
+            CollectionExpressionKillerAnalyzer.DisallowAllDiagnosticId,
+            CollectionExpressionKillerAnalyzer.DisallowMultilineDiagnosticId,
+            CollectionExpressionKillerAnalyzer.DisallowAnyElementsDiagnosticId);
     }
 
     [Fact]
@@ -233,7 +233,7 @@ public sealed class CollectionExpressionKillerTests
         AssertDiagnosticIds(
             diagnostics,
             CollectionExpressionKillerAnalyzer.DisallowAllDiagnosticId,
-            "CEK005");
+            CollectionExpressionKillerAnalyzer.DisallowAnyElementsDiagnosticId);
     }
 
     [Fact]
@@ -257,7 +257,7 @@ public sealed class CollectionExpressionKillerTests
             diagnostics,
             CollectionExpressionKillerAnalyzer.DisallowAllDiagnosticId,
             CollectionExpressionKillerAnalyzer.DisallowManyElementsDiagnosticId,
-            "CEK005");
+            CollectionExpressionKillerAnalyzer.DisallowAnyElementsDiagnosticId);
     }
 
     [Fact]
@@ -279,8 +279,8 @@ public sealed class CollectionExpressionKillerTests
 
         AssertDiagnosticIds(
             diagnostics,
-            "CEK001",
-            "CEK005");
+            CollectionExpressionKillerAnalyzer.DisallowAllDiagnosticId,
+            CollectionExpressionKillerAnalyzer.DisallowAnyElementsDiagnosticId);
     }
 
     private static async Task<ImmutableArray<Diagnostic>> GetDiagnosticsAsync(string source)
