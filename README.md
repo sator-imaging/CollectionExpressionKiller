@@ -72,6 +72,18 @@ values = [1234, 56789, ..values, ..other];  // Error: 4 elements
 ```
 
 
+`.editorconfig` only allowing `[]` in entire project:
+
+```ini
+dotnet_diagnostic.CEK001.severity = none  # Collection expressions are disallowed
+dotnet_diagnostic.CEK002.severity = none  # Collection expressions with more than 3 elements are disallowed
+dotnet_diagnostic.CEK003.severity = none  # Long collection expression text is disallowed
+dotnet_diagnostic.CEK004.severity = none  # Multiline collection expressions are disallowed
+dotnet_diagnostic.CEK005.severity = error # Collection expressions with elements are disallowed
+```
+
+
+
 ## How to Disable Analyzer
 
 Disable for entire `.cs` file with `#pragma`:
