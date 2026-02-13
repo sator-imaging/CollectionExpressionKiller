@@ -66,6 +66,7 @@ values = [1234, 56789, .. values];  // Error: More than 12 chars
 // To allow expression which is 3 or less elements in single line
 #pragma warning disable CEK001
 #pragma warning disable CEK003
+#pragma warning disable CEK005
 
 values = [1234, 56789, ..values];  // OK: Simple enough
 values = [1234, 56789, ..values, ..other];  // Error: 4 elements
