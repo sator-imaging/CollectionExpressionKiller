@@ -19,6 +19,7 @@ public sealed class CollectionExpressionKillerAnalyzer : DiagnosticAnalyzer
     public const string DisallowManyElementsDiagnosticId = "CEK002";
     public const string DisallowLongExpressionDiagnosticId = "CEK003";
     public const string DisallowMultilineDiagnosticId = "CEK004";
+    public const string DisallowAnyElementsDiagnosticId = "CEK005";
     private const int ManyElementsThreshold = 3;
     private const int LongExpressionThreshold = 12;
 
@@ -58,8 +59,17 @@ public sealed class CollectionExpressionKillerAnalyzer : DiagnosticAnalyzer
         isEnabledByDefault: true,
         description: "Disallows collection expressions that span multiple lines.");
 
+    private static readonly DiagnosticDescriptor DisallowAnyElementsRule = new(
+        id: DisallowAnyElementsDiagnosticId,
+        title: "Collection expressions with elements are disallowed",
+        messageFormat: "Collection expressions must be empty",
+        category: "Usage",
+        defaultSeverity: DiagnosticSeverity.Error,
+        isEnabledByDefault: true,
+        description: "Disallows collection expressions when they have one or more elements.");
+
     public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics =>
-        ImmutableArray.Create(DisallowAllRule, DisallowManyElementsRule, DisallowLongExpressionRule, DisallowMultilineRule);
+        ImmutableArray.Create(DisallowAllRule, DisallowManyElementsRule, DisallowLongExpressionRule, DisallowMultilineRule, DisallowAnyElementsRule);
 
     public override void Initialize(AnalysisContext context)
     {
@@ -80,6 +90,13 @@ public sealed class CollectionExpressionKillerAnalyzer : DiagnosticAnalyzer
         context.ReportDiagnostic(Diagnostic.Create(
             DisallowAllRule,
             expression.GetLocation()));
+
+        if (expression.Elements.Count > 0)
+        {
+            context.ReportDiagnostic(Diagnostic.Create(
+                DisallowAnyElementsRule,
+                expression.GetLocation()));
+        }
 
         if (expression.Elements.Count > ManyElementsThreshold)
         {
