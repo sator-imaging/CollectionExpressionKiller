@@ -47,7 +47,7 @@ dotnet_diagnostic.IDE0028.severity = silent   # Use collection initializers
 
 &nbsp;
 
-# Diagnostics
+# Diagnostics Customization
 
 Ability to disallow all expressions or complicated only.
 
@@ -76,11 +76,11 @@ values = [1234, 56789, ..values, ..other];  // Error: 4 elements
 `.editorconfig` only allowing `[]` in entire project:
 
 ```ini
-dotnet_diagnostic.CEK001.severity = none  # Collection expressions are disallowed
-dotnet_diagnostic.CEK002.severity = none  # Collection expressions with more than 3 elements are disallowed
-dotnet_diagnostic.CEK003.severity = none  # Long collection expression text is disallowed
-dotnet_diagnostic.CEK004.severity = none  # Multiline collection expressions are disallowed
-dotnet_diagnostic.CEK005.severity = error # Collection expressions with elements are disallowed
+dotnet_diagnostic.CEK001.severity = none   # Collection expressions are disallowed
+dotnet_diagnostic.CEK002.severity = none   # Collection expressions with more than 3 elements are disallowed
+dotnet_diagnostic.CEK003.severity = none   # Long collection expression text is disallowed
+dotnet_diagnostic.CEK004.severity = none   # Multiline collection expressions are disallowed
+dotnet_diagnostic.CEK005.severity = error  # Collection expressions with elements are disallowed
 ```
 
 
@@ -94,6 +94,7 @@ Disable for entire `.cs` file with `#pragma`:
 #pragma warning disable CEK002
 #pragma warning disable CEK003
 #pragma warning disable CEK004
+#pragma warning disable CEK005
 
 int[] values = [1, 2, 3, 4, ..otherCollection];
 ```
