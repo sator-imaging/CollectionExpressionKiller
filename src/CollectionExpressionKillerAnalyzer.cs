@@ -20,6 +20,7 @@ public sealed class CollectionExpressionKillerAnalyzer : DiagnosticAnalyzer
     public const string DisallowLongExpressionDiagnosticId = "CEK003";
     public const string DisallowMultilineDiagnosticId = "CEK004";
     public const string DisallowAnyElementsDiagnosticId = "CEK005";
+    public const string DiagnosticCategory = "CollectionExprKiller";
     private const int ManyElementsThreshold = 3;
     private const int LongExpressionThreshold = 12;
 
@@ -27,7 +28,7 @@ public sealed class CollectionExpressionKillerAnalyzer : DiagnosticAnalyzer
         id: DisallowAllDiagnosticId,
         title: "Collection expressions are disallowed",
         messageFormat: "Collection expressions are not allowed",
-        category: "Usage",
+        category: DiagnosticCategory,
         defaultSeverity: DiagnosticSeverity.Error,
         isEnabledByDefault: true,
         description: "Disallows any collection expression syntax.");
@@ -36,7 +37,7 @@ public sealed class CollectionExpressionKillerAnalyzer : DiagnosticAnalyzer
         id: DisallowManyElementsDiagnosticId,
         title: $"Collection expressions with more than {ManyElementsThreshold} elements are disallowed",
         messageFormat: $"Collection expressions must have {ManyElementsThreshold} or fewer elements",
-        category: "Usage",
+        category: DiagnosticCategory,
         defaultSeverity: DiagnosticSeverity.Error,
         isEnabledByDefault: true,
         description: $"Disallows collection expressions when they have more than {ManyElementsThreshold} elements.");
@@ -45,7 +46,7 @@ public sealed class CollectionExpressionKillerAnalyzer : DiagnosticAnalyzer
         id: DisallowLongExpressionDiagnosticId,
         title: "Long collection expression text is disallowed",
         messageFormat: $"Collection expression text length must be {LongExpressionThreshold} or fewer characters",
-        category: "Usage",
+        category: DiagnosticCategory,
         defaultSeverity: DiagnosticSeverity.Error,
         isEnabledByDefault: true,
         description: $"Disallows collection expressions whose string representation is longer than {LongExpressionThreshold} characters.");
@@ -54,7 +55,7 @@ public sealed class CollectionExpressionKillerAnalyzer : DiagnosticAnalyzer
         id: DisallowMultilineDiagnosticId,
         title: "Multiline collection expressions are disallowed",
         messageFormat: "Collection expressions must be on a single line",
-        category: "Usage",
+        category: DiagnosticCategory,
         defaultSeverity: DiagnosticSeverity.Error,
         isEnabledByDefault: true,
         description: "Disallows collection expressions that span multiple lines.");
@@ -63,7 +64,7 @@ public sealed class CollectionExpressionKillerAnalyzer : DiagnosticAnalyzer
         id: DisallowAnyElementsDiagnosticId,
         title: "Collection expressions with elements are disallowed",
         messageFormat: "Collection expressions must be empty",
-        category: "Usage",
+        category: DiagnosticCategory,
         defaultSeverity: DiagnosticSeverity.Error,
         isEnabledByDefault: true,
         description: "Disallows collection expressions when they have one or more elements.");

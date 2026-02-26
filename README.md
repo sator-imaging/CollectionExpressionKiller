@@ -106,27 +106,27 @@ Disable for entire assembly:
 using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage(
-    "Usage",
+    "CollectionExprKiller",
     "CEK001:Collection expressions are not allowed",
     Justification = "Approved for this assembly")]
 
 [assembly: SuppressMessage(
-    "Usage",
+    "CollectionExprKiller",
     "CEK002:Collection expressions must have fewer than 4 elements",
     Justification = "Approved for this assembly")]
 
 [assembly: SuppressMessage(
-    "Usage",
+    "CollectionExprKiller",
     "CEK003:Collection expression text length must be 12 or fewer characters",
     Justification = "Approved for this assembly")]
 
 [assembly: SuppressMessage(
-    "Usage",
+    "CollectionExprKiller",
     "CEK004:Collection expressions must be on a single line",
     Justification = "Approved for this assembly")]
 
 [assembly: SuppressMessage(
-    "Usage",
+    "CollectionExprKiller",
     "CEK005:Collection expressions must be empty",
     Justification = "Approved for this assembly")]
 ```
@@ -140,4 +140,11 @@ dotnet_diagnostic.CEK002.severity = none
 dotnet_diagnostic.CEK003.severity = none
 dotnet_diagnostic.CEK004.severity = none
 dotnet_diagnostic.CEK005.severity = none
+```
+
+
+Disable for entire project by category with `.editorconfig`:
+
+```ini
+dotnet_analyzer_diagnostic.category-CollectionExprKiller.severity = none
 ```
