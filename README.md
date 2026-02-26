@@ -87,16 +87,21 @@ dotnet_diagnostic.CEK005.severity = error  # Collection expressions with element
 
 ## How to Disable Analyzer
 
-Disable for entire `.cs` file with `#pragma`:
+Disable for entire project by category with `.editorconfig`:
 
-```csharp
-#pragma warning disable CEK001
-#pragma warning disable CEK002
-#pragma warning disable CEK003
-#pragma warning disable CEK004
-#pragma warning disable CEK005
+```ini
+dotnet_analyzer_diagnostic.category-CollectionExprKiller.severity = none
+```
 
-int[] values = [1, 2, 3, 4, ..otherCollection];
+
+Disable for entire project with `.editorconfig`:
+
+```ini
+dotnet_diagnostic.CEK001.severity = none
+dotnet_diagnostic.CEK002.severity = none
+dotnet_diagnostic.CEK003.severity = none
+dotnet_diagnostic.CEK004.severity = none
+dotnet_diagnostic.CEK005.severity = none
 ```
 
 
@@ -132,19 +137,14 @@ using System.Diagnostics.CodeAnalysis;
 ```
 
 
-Disable for entire project with `.editorconfig`:
+Disable for entire `.cs` file with `#pragma`:
 
-```ini
-dotnet_diagnostic.CEK001.severity = none
-dotnet_diagnostic.CEK002.severity = none
-dotnet_diagnostic.CEK003.severity = none
-dotnet_diagnostic.CEK004.severity = none
-dotnet_diagnostic.CEK005.severity = none
-```
+```csharp
+#pragma warning disable CEK001
+#pragma warning disable CEK002
+#pragma warning disable CEK003
+#pragma warning disable CEK004
+#pragma warning disable CEK005
 
-
-Disable for entire project by category with `.editorconfig`:
-
-```ini
-dotnet_analyzer_diagnostic.category-CollectionExprKiller.severity = none
+int[] values = [1, 2, 3, 4, ..otherCollection];
 ```
