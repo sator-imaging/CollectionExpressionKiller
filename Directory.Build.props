@@ -20,7 +20,7 @@
     <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
   </PropertyGroup>
 
-  <PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
   </PropertyGroup>
 
@@ -62,8 +62,6 @@
     </None>
   </ItemGroup>
   <PropertyGroup>
-    <!-- false for analyzer project -->
-    <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
 
     <PackageIcon>$(NuGetPublishIconFile)</PackageIcon>
